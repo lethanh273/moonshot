@@ -314,18 +314,20 @@ module Moonshot
         'production'
       end
 
-      standard_tags = {
-        'acquia:bu' => 'dc',
-        'acquia:stage' => "cloud-data-#{@name}",
-        'acquia:created_for' => 'cloud-data',
-        'acquia:created_by' => 'cloud-data-service',
-        'acquia:environment' => env
-      }
+      standard_tags = [
+        { key: 'acquia:bu', value: 'dc' },
+        { key: 'acquia:stage', value: 'cloud-data-#{@name}'},
+        { key: 'acquia:created_for', value: 'cloud-data'},
+        { key: 'acquia:created_by', value: 'cloud-data-service'},
+        { key: 'acquia:environment', value: env}
+      ]
+
       unless env == 'production'
-        standard_tags['acquia:expiry'] = '9999-01-01'
-        standard_tags['acquia:consumer'] = 'cloud-data'
+        standard_tags << { key: 'acquia:expiry', value: '9999-01-01' }
+        standard_tags << { key: 'acquia:consumer', value: 'cloud-data' }
       end
-      [standard_tags]
+
+      standard_tags
     end
 
     def format_event(event)
