@@ -318,7 +318,7 @@ module Moonshot
 
       standard_tags = [
         { key: 'acquia:bu', value: 'dc' },
-        { key: 'acquia:stage', value: 'cloud-data-#{@name}'},
+        { key: 'acquia:stage', value: "cloud-data-#{@name}"},
         { key: 'acquia:created_for', value: 'cloud-data'},
         { key: 'acquia:created_by', value: 'cloud-data-service'},
         { key: 'acquia:environment', value: env}
