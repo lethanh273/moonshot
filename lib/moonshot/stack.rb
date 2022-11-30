@@ -39,8 +39,8 @@ module Moonshot
       raise "No stack found #{@name.blue}!" unless stack_exists?
 
       @ilog.start "aaaa" do |s|
-        s.success "#{cf_client}"
-        s.success "bbbb"
+        s.success "#{resource_summaries}"
+        s.success "vvvv"
       end
 
       change_set = ChangeSet.new(new_change_set, @name)
