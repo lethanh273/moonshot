@@ -325,7 +325,7 @@ module Moonshot
         standard_tags['acquia:expiry'] = '9999-01-01'
         standard_tags['acquia:consumer'] = 'cloud-data'
       end
-      standard_tags
+      [standard_tags]
     end
 
     def format_event(event)
