@@ -301,7 +301,9 @@ module Moonshot
       if @config.additional_tag
         default_tags << { key: @config.additional_tag, value: @name }
       end
-
+      p "gggg"
+      p default_tags
+      p standard_tags
       default_tags + @config.extra_tags + standard_tags
     end
 
