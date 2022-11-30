@@ -35,7 +35,8 @@ module Moonshot
 
     def display_changes
       wait_for_change_set unless @change_set
-
+      p "#{@change_set}"
+      p "hhhh"
       @change_set.changes.map(&:resource_change).each do |c|
         puts "* #{c.action} #{c.logical_resource_id} (#{c.resource_type})"
 
@@ -46,6 +47,7 @@ module Moonshot
         end
 
         c.details.each do |d|
+          puts "#{d}"
           case d.change_source
           when 'ResourceReference', 'ParameterReference'
             puts " - Caused by #{d.causing_entity.blue} (#{d.change_source})"
