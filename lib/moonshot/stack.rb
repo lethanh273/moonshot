@@ -38,6 +38,11 @@ module Moonshot
     def update(dry_run:, force:)
       raise "No stack found #{@name.blue}!" unless stack_exists?
 
+      @ilog.start "aaaa" do |s|
+        s.success "#{cf_client}"
+        s.success "bbbb"
+      end
+
       change_set = ChangeSet.new(new_change_set, @name)
       wait_for_change_set(change_set)
       return unless change_set.valid?
