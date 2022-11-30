@@ -46,7 +46,7 @@ module Moonshot
 
       # Each mechanism / plugin may manipulate the OptionParser object
       # associated with this command.
-      %i[build_mechanism deployment_mechanism artifact_repository].each do |prov|
+      [:build_mechanism, :deployment_mechanism, :artifact_repository].each do |prov|
         provider = Moonshot.config.send(prov)
 
         if provider.respond_to?(hook_func_name(@command))

@@ -1,12 +1,5 @@
 require 'English'
-
-require 'aws-sdk-cloudformation'
-require 'aws-sdk-codedeploy'
-require 'aws-sdk-ec2'
-require 'aws-sdk-iam'
-require 'aws-sdk-autoscaling'
-require 'aws-sdk-s3'
-
+require 'aws-sdk'
 require 'logger'
 require 'thor'
 require 'interactive-logger'

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative 'parameter_arguments'
+require_relative 'tag_arguments'
 require_relative 'show_all_events_option'
 require_relative 'parent_stack_option'
 
@@ -8,6 +9,7 @@ module Moonshot
   module Commands
     class Create < Moonshot::Command
       include ParameterArguments
+      include TagArguments
       include ShowAllEventsOption
       include ParentStackOption
 

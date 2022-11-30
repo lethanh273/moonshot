@@ -31,7 +31,7 @@ The 'hack' with lambdas created for the cases when you need to read
 CLI parameters before running the plugin.
 
 Parameters could be described in two ways:
-* key-value pairs
+* key-value pairs   
   ```ruby
   parameters: { deletion_policy: 'Retain' }
   ```
