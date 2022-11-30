@@ -38,16 +38,8 @@ module Moonshot
     def update(dry_run:, force:)
       raise "No stack found #{@name.blue}!" unless stack_exists?
 
-      @ilog.start "aaaa" do |s|
-        s.success "#{default_values}"
-        s.success "parameters"
-
-        s.success "#{parameters}"
-
-        s.success "bbbb"
-      end
-
       change_set = ChangeSet.new(new_change_set, @name)
+
       wait_for_change_set(change_set)
       return unless change_set.valid?
 
@@ -310,7 +302,30 @@ module Moonshot
         default_tags << { key: @config.additional_tag, value: @name }
       end
 
-      default_tags + @config.extra_tags
+      default_tags + @config.extra_tags + standard_tags
+    end
+
+    def standard_tags
+      env = if @config.environment_name.include?('dev')
+        'development'
+      elsif @config.environment_name.include?('test')
+        'staging'
+      else
+        'production'
+      end
+
+      standard_tags = {
+        'acquia:bu' => 'dc',
+        'acquia:stage' => "cloud-data-#{@name}",
+        'acquia:created_for' => 'cloud-data',
+        'acquia:created_by' => 'cloud-data-service',
+        'acquia:environment' => env
+      }
+      unless env == 'production'
+        standard_tags['acquia:expiry'] = '9999-01-01'
+        standard_tags['acquia:consumer'] = 'cloud-data'
+      end
+      standard_tags
     end
 
     def format_event(event)
