@@ -98,8 +98,7 @@ module Moonshot
     def tags
       get_stack(@name)
         .tags
-        .map { |o| [o.output_key, o.output_value] }
-        .to_h
+        .map { |o| { key: o.key, value: o.value } }
     end
 
     def exists?
