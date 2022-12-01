@@ -233,8 +233,6 @@ module Moonshot
         @name,
         Time.now.utc.to_i.to_s
       ].join('-')
-      p "printtt"
-      p make_tags
 
       parameters = {
         change_set_name: change_set_name,
@@ -310,9 +308,6 @@ module Moonshot
       if @config.additional_tag
         default_tags << { key: @config.additional_tag, value: @name }
       end
-      p default_tags
-      p "existing"
-      p existing_tags
 
       (default_tags + @config.extra_tags + existing_tags).uniq!
     end
