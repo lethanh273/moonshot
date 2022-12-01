@@ -233,12 +233,18 @@ module Moonshot
         description: "Moonshot update command for application '#{Moonshot.config.app_name}'",
         stack_name: @name,
         capabilities:  %w(CAPABILITY_IAM CAPABILITY_NAMED_IAM),
-        parameters: @config.parameters.values.map(&:to_cf),
+        parameters: @config.parameters.values.map(&:to_cf)
       }
       p "printtt"
       p @config.parameters.values.map(&:to_cf)
       p @config
       p cf_client
+      p @config
+      p @config.parameters
+      p @config.parameters.values
+      p Moonshot.config.extra_tags
+      p Moonshot.config.additional_tags
+
       if @config.template_s3_bucket
         parameters[:template_url] = upload_template_to_s3
       else
