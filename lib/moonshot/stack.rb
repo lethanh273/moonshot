@@ -234,8 +234,11 @@ module Moonshot
         stack_name: @name,
         capabilities:  %w(CAPABILITY_IAM CAPABILITY_NAMED_IAM),
         parameters: @config.parameters.values.map(&:to_cf),
-        tags: make_tags
       }
+      p "printtt"
+      p @config.parameters.values.map(&:to_cf),
+      p @config
+      p cf_client
       if @config.template_s3_bucket
         parameters[:template_url] = upload_template_to_s3
       else
@@ -301,35 +304,8 @@ module Moonshot
       if @config.additional_tag
         default_tags << { key: @config.additional_tag, value: @name }
       end
-      p "gggg"
-      p default_tags
-      p standard_tags
-      default_tags + @config.extra_tags + standard_tags
-    end
 
-    def standard_tags
-      env = if @config.environment_name.include?('dev')
-        'development'
-      elsif @config.environment_name.include?('test')
-        'staging'
-      else
-        'production'
-      end
-
-      standard_tags = [
-        { key: 'acquia:bu', value: 'dc' },
-        { key: 'acquia:stage', value: "cloud-data-#{@name}"},
-        { key: 'acquia:created_for', value: 'cloud-data'},
-        { key: 'acquia:created_by', value: 'cloud-data-service'},
-        { key: 'acquia:environment', value: env}
-      ]
-
-      unless env == 'production'
-        standard_tags << { key: 'acquia:expiry', value: '9999-01-01' }
-        standard_tags << { key: 'acquia:consumer', value: 'cloud-data' }
-      end
-
-      standard_tags
+      default_tags + @config.extra_tags
     end
 
     def format_event(event)
