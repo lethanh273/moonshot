@@ -95,7 +95,7 @@ module Moonshot
         .to_h
     end
 
-    def tags
+    def existing_tags
       get_stack(@name)
         .tags
         .map { |o| { key: o.key, value: o.value } }
@@ -233,6 +233,8 @@ module Moonshot
         @name,
         Time.now.utc.to_i.to_s
       ].join('-')
+      p "printtt"
+      p make_tags
 
       parameters = {
         change_set_name: change_set_name,
@@ -242,8 +244,6 @@ module Moonshot
         parameters: @config.parameters.values.map(&:to_cf),
         tags: make_tags
       }
-      p "printtt"
-      p make_tags
 
       if @config.template_s3_bucket
         parameters[:template_url] = upload_template_to_s3
@@ -312,9 +312,9 @@ module Moonshot
       end
       p default_tags
       p "existing"
-      p tags
+      p existing_tags
 
-      (default_tags + @config.extra_tags + get_stack(@name).tags).uniq!
+      (default_tags + @config.extra_tags + existing_tags).uniq!
     end
 
     def format_event(event)
