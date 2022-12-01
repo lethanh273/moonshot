@@ -236,7 +236,7 @@ module Moonshot
         parameters: @config.parameters.values.map(&:to_cf),
       }
       p "printtt"
-      p @config.parameters.values.map(&:to_cf),
+      p @config.parameters.values.map(&:to_cf)
       p @config
       p cf_client
       if @config.template_s3_bucket
