@@ -95,6 +95,13 @@ module Moonshot
         .to_h
     end
 
+    def tags
+      get_stack(@name)
+        .tags
+        .map { |o| [o.output_key, o.output_value] }
+        .to_h
+    end
+
     def exists?
       cf_client.describe_stacks(stack_name: @name)
       true
@@ -234,13 +241,9 @@ module Moonshot
         stack_name: @name,
         capabilities:  %w(CAPABILITY_IAM CAPABILITY_NAMED_IAM),
         parameters: @config.parameters.values.map(&:to_cf)
+        tags: make_tags
       }
       p "printtt"
-
-      p get_stack(name)
-      p get_stack(@name).parameters
-      p get_stack(@name).outputs
-      p get_stack(@name).tags
 
       if @config.template_s3_bucket
         parameters[:template_url] = upload_template_to_s3
@@ -307,8 +310,11 @@ module Moonshot
       if @config.additional_tag
         default_tags << { key: @config.additional_tag, value: @name }
       end
+      p default_tags
+      p "existing"
+      p tags
 
-      default_tags + @config.extra_tags
+      (default_tags + @config.extra_tags + get_stack(@name).tags).uniq!
     end
 
     def format_event(event)
