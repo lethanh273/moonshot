@@ -95,12 +95,6 @@ module Moonshot
         .to_h
     end
 
-    def existing_tags
-      get_stack(@name)
-        .tags
-        .map { |o| { key: o.key, value: o.value } }
-    end
-
     def exists?
       cf_client.describe_stacks(stack_name: @name)
       true
@@ -309,7 +303,7 @@ module Moonshot
         default_tags << { key: @config.additional_tag, value: @name }
       end
 
-      (default_tags + @config.extra_tags + existing_tags).uniq!
+      default_tags + @config.extra_tags
     end
 
     def format_event(event)
