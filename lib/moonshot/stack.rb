@@ -302,7 +302,7 @@ module Moonshot
       if @config.additional_tag
         default_tags << { key: @config.additional_tag, value: @name }
       end
-
+      p @config.extra_tags
       default_tags + @config.extra_tags
     end
 
