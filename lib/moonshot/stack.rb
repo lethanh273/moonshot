@@ -37,7 +37,8 @@ module Moonshot
 
     def update(dry_run:, force:)
       raise "No stack found #{@name.blue}!" unless stack_exists?
-
+      p "eeeee"
+      p new_change_set
       change_set = ChangeSet.new(new_change_set, @name)
 
       wait_for_change_set(change_set)
@@ -289,7 +290,6 @@ module Moonshot
           s.failure "#{stack_name} failed to update."
         end
       end
-
       result
     end
 
